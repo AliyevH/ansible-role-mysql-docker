@@ -9,15 +9,16 @@ Install mysql in docker container with  remote access root user
 Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required. -->
 
 Role Variables
-MYSQL_DB_DIR: 
+=========
+
+MYSQL_DB_DIR
 DOCKER_MYSQL_TAG
-
 CONTAINER_NAME
-
 MYSQL_ROOT_PASSWORD
 MYSQL_DATABASE
 MYSQL_USER
 MYSQL_PASSWORD
+
 --------------
 
 <!-- A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well. -->
@@ -34,7 +35,8 @@ Including an example of how to use your role (for instance, with variables passe
 
     - hosts: servers
       roles:
-         - { role: username.rolename, x: 42 }
+         - 
+         { role: username.rolename, x: 42 }
 
 License
 -------

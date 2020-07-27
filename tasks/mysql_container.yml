@@ -1,0 +1,59 @@
+- name: Add repository
+  yum_repository:
+    name: epel
+    description: EPEL YUM repo
+    baseurl: https://download.fedoraproject.org/pub/epel/$releasever/$basearch/
+
+- name: install the python-pip from the epel repo
+  yum:
+    name: python-pip
+    enablerepo: epel
+    state: present
+
+- name: Install PyMySQL with pip
+  pip:
+    name: PyMySQL
+
+- name: Install mysql-client
+  yum:
+    name: mysql
+    state: present
+
+- name: Install docker module with pip for python
+  pip:
+    name: docker 
+
+- name: Create directory for mysql db
+  file: 
+    state: directory
+    path: "{{ MYSQL_DB_DIR }}"
+
+- name: Start mysql docker container
+  tags:
+    - mysql
+  docker_container:
+    name: "{{ CONTAINER_NAME }}"
+    image: mysql:{{ DOCKER_MYSQL_TAG }}
+    state: started
+    recreate: yes
+    restart_policy: always
+    exposed_ports:
+      - 3306
+    ports:
+      - 3306:3306
+    volumes:
+      - "{{ MYSQL_DB_DIR }}:/var/lib/mysql"
+
+    env:
+      MYSQL_ROOT_PASSWORD: "{{ MYSQL_ROOT_PASSWORD }}"
+      MYSQL_DATABASE: "{{ MYSQL_DATABASE }}"
+      # MYSQL_USER: "{{ MYSQL_USER }}"
+      # MYSQL_PASSWORD: "{{ MYSQL_PASSWORD }}"
+      priv: "{{ MYSQL_DATABASE }}.*:ALL"
+      host: "%"
+
+# - name: Run mysql command 
+#   tags:
+#     - GrantPermission
+#   command: docker exec -i {{ CONTAINER_NAME }} mysql -u root -p{{ MYSQL_ROOT_PASSWORD }}  -e "GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED WITH mysql_native_password BY '{{ MYSQL_ROOT_PASSWORD }}';"
+

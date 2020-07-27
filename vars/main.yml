@@ -1,0 +1,11 @@
+---
+# vars file for mysql_container
+MYSQL_DB_DIR: /home/mysql/data
+DOCKER_MYSQL_TAG: 5.7
+
+CONTAINER_NAME: mysql
+
+MYSQL_ROOT_PASSWORD: root
+MYSQL_DATABASE: test
+MYSQL_USER: admin
+MYSQL_PASSWORD: admin
